@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TopCar Estúdio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Exo+2:ital,wght@0,600;0,800;0,900;1,800;1,900&family=Saira+Condensed:wght@600;800&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/studio/studio.css">
+</head>
+<body>
+<header class="topo">
+  <div class="marca"><span class="top">TOP</span>CAR<small>ESTÚDIO</small></div>
+  <select id="sel-projeto" title="Projetos"></select>
+  <input id="nome-projeto" placeholder="Nome do vídeo">
+  <button id="btn-novo" title="Novo projeto">＋ Novo</button>
+  <span id="status-salvo" class="muted"></span>
+  <div class="espaco"></div>
+  <button id="btn-central" class="primario" title="Volta ao painel: hoje, estoque, agenda e resultados">← Painel</button>
+
+  <button id="btn-modo" title="Alterna entre o estúdio simples e o editor completo">⚙ Modo avançado</button>
+  <button id="btn-desfazer" title="Desfazer (Ctrl+Z)">↶</button>
+  <button id="btn-refazer" title="Refazer (Ctrl+Y)">↷</button>
+  <a class="btn" href="/copy" target="_blank" title="Só gerar a copy, sem editar">Copy rápida</a>
+  <button id="btn-montar" class="destaque">🎬 Montar com IA</button>
+  <button id="btn-versao" class="destaque" title="Gera outro roteiro com um formato diferente">🎲 Outra versão</button>
+  <button id="btn-exportar" class="primario">⬇ Exportar MP4</button>
+</header>
+
+<div class="app">
+  <aside class="s-esq" id="s-esq"></aside>
+  <aside class="esq">
+    <nav class="abas">
+      <button data-aba="carro" class="on">Carro</button>
+      <button data-aba="gravacao">Gravação</button>
+      <button data-aba="takes">Takes</button>
+      <button data-aba="audio">Áudio</button>
+      <button data-aba="refs">Referências</button>
+      <button data-aba="roteiro">Roteiro</button>
+      <button data-aba="marca">Marca</button>
+    </nav>
+    <div class="painel" id="aba-carro"></div>
+    <div class="painel" id="aba-gravacao" hidden></div>
+    <div class="painel" id="aba-takes" hidden></div>
+    <div class="painel" id="aba-audio" hidden></div>
+    <div class="painel" id="aba-refs" hidden></div>
+    <div class="painel" id="aba-roteiro" hidden></div>
+    <div class="painel" id="aba-marca" hidden></div>
+  </aside>
+
+  <section class="centro">
+    <div class="palco" id="palco">
+      <canvas id="preview" width="540" height="960"></canvas>
+      <div class="aviso-vazio" id="aviso-vazio">
+        <b>1.</b> Preencha o carro &nbsp; <b>2.</b> Envie os takes &nbsp; <b>3.</b> 🎬 Montar com IA
+      </div>
+    </div>
+    <div class="controles">
+      <button id="btn-inicio" title="Início">⏮</button>
+      <button id="btn-play" class="play" title="Play/Pause (Espaço)">▶</button>
+      <span id="tempo" class="tempo">0:00.0 / 0:00.0</span>
+      <label class="chk"><input type="checkbox" id="chk-zona"> Zona segura</label>
+      <label class="chk"><input type="checkbox" id="chk-hq"> Prévia HD</label>
+    </div>
+  </section>
+
+  <aside class="dir">
+    <h3 id="insp-titulo">Projeto</h3>
+    <div id="inspetor"></div>
+  </aside>
+  <aside class="s-dir" id="s-dir"></aside>
+</div>
+
+<section class="linha-tempo">
+  <div class="tl-barra">
+    <button id="tl-dividir" title="Dividir clipe no cursor (S)">✂ Dividir</button>
+    <button id="tl-apagar" title="Apagar selecionado (Delete)">🗑 Apagar</button>
+    <button id="tl-texto" title="Adicionar texto no cursor (T)">＋ Texto</button>
+    <label class="chk"><input type="checkbox" id="tl-ima" checked> Ímã</label>
+    <label class="chk"><input type="checkbox" id="tl-batida"> Grudar na batida</label>
+    <div class="espaco"></div>
+    <span class="muted">Zoom</span>
+    <input type="range" id="tl-zoom" min="30" max="300" value="90">
+  </div>
+  <div class="tl-corpo">
+    <div class="tl-nomes">
+      <div class="tl-regua-esp"></div>
+      <div class="tl-nome">🎥 Vídeo</div>
+      <div class="tl-nome">🔤 Texto</div>
+      <div class="tl-nome">🎙 Narração</div>
+      <div class="tl-nome">🎵 Música</div>
+      <div class="tl-nome">💥 Efeitos</div>
+    </div>
+    <div class="tl-rolagem" id="tl-rolagem">
+      <div class="tl-conteudo" id="tl-conteudo">
+        <div class="tl-regua" id="tl-regua"></div>
+        <div class="tl-faixa" data-faixa="video"></div>
+        <div class="tl-faixa" data-faixa="texto"></div>
+        <div class="tl-faixa" data-faixa="narracao"></div>
+        <div class="tl-faixa" data-faixa="musica"></div>
+        <div class="tl-faixa" data-faixa="sfx"></div>
+        <div class="tl-cursor" id="tl-cursor"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="calendario setor" id="calendario" hidden>
+  <aside class="setor-nav">
+    <div class="marca"><span class="top">TOP</span>CAR<small>SETOR DE CONTEÚDO &amp; VISUAL</small></div>
+    <nav id="cal-abas">
+      <button data-aba="central"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span><b>Hoje</b><small>o que fazer e a semana</small></span><i data-badge="central"></i></button>
+      <button data-aba="estoque" data-grupo="estoque fotos videos"><svg viewBox="0 0 24 24"><path d="M5 16l1.5-5A2 2 0 0 1 8.4 9.5h7.2a2 2 0 0 1 1.9 1.5L19 16M4 16h16v3H4z"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg><span><b>Estoque</b><small>os carros e seus vídeos</small></span><i data-badge="estoque"></i></button>
+      <button data-aba="mes" data-grupo="mes dia pautas quadros"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span><b>Agenda</b><small>posts, dia a dia e ideias</small></span></button>
+      <button data-aba="resultados" data-grupo="resultados atendimento anuncios"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span><b>Resultados</b><small>vendas, leads e anúncios</small></span><i data-badge="atendimento"></i></button>
+      <button data-aba="social" data-grupo="social visual inteligencia plano integracoes"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg><span><b>Estratégia</b><small>plano, marca e mercado</small></span></button>
+    </nav>
+    <button id="cal-fechar" class="abrir-editor"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1L20 20M8.1 15.9L20 4"/></svg> Abrir o editor de vídeo</button>
+    <div class="setor-rodape muted">@topcarveiculos.pe</div>
+  </aside>
+  <div class="cal-corpo" id="cal-corpo"></div>
+</section>
+
+<div class="modal" id="modal" hidden>
+  <div class="caixa">
+    <h3 id="modal-titulo">Exportando</h3>
+    <div class="barra"><div id="modal-barra"></div></div>
+    <p id="modal-texto" class="muted"></p>
+    <div id="modal-acoes"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module" src="/static/studio/js/main.js"></script>
+</body>
+</html>

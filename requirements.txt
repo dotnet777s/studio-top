@@ -1,0 +1,10 @@
+flask>=3.0
+waitress>=3.0
+google-genai>=3.0
+imageio-ffmpeg>=0.6
+psycopg[binary]>=3.2
+pillow>=10
+pillow-heif>=0.16
+requests>=2.31
+# só se as fotos forem para um storage S3 (FOTOS_S3_* no .env):
+boto3>=1.34

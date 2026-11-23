@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copywriter de Reels</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --panel2: #1e222b; --line: #2a2f3a;
+    --text: #e8eaef; --muted: #9aa1ae; --accent: #ffb020; --accent-ink: #1a1200;
+    --ok: #3ecf8e; --warn: #ff7a59; --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { padding: 20px 24px; border-bottom: 1px solid var(--line); display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 20px; }
+  header h1 span { color: var(--accent); }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  main { display: grid; grid-template-columns: 400px 1fr; gap: 20px; padding: 20px 24px; max-width: 1500px; margin: 0 auto; }
+  @media (max-width: 960px) { main { grid-template-columns: 1fr; padding: 16px; } }
+
+  form { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; align-self: start; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow: auto; }
+  @media (max-width: 960px) { form { position: static; max-height: none; } }
+  fieldset { border: 0; padding: 0; margin: 0 0 16px; }
+  legend { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  label b { color: var(--warn); font-weight: 600; }
+  input, select, textarea { width: 100%; margin-top: 4px; background: var(--panel2); color: var(--text);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font: inherit; }
+  textarea { resize: vertical; min-height: 60px; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+  .checks { display: flex; gap: 18px; margin-bottom: 10px; }
+  .checks label { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--text); }
+  .checks input { width: auto; margin: 0; }
+  button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line); background: var(--panel2); color: var(--text); padding: 8px 12px; }
+  button:hover { border-color: var(--accent); }
+  .primary { width: 100%; background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 700; padding: 13px; font-size: 16px; }
+  .primary:disabled { opacity: .6; cursor: wait; }
+
+  #saida { min-width: 0; }
+  .vazio { color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); padding: 40px; text-align: center; }
+  .vazio h2 { color: var(--text); margin-top: 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; }
+  .card h2 { margin: 0 0 12px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .card h2 button { font-size: 12px; padding: 5px 10px; font-weight: 500; }
+  .big { font-size: 17px; }
+  .muted { color: var(--muted); }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 1200px) { .grid3 { grid-template-columns: 1fr; } }
+  .mini { background: var(--panel2); border-radius: 8px; padding: 12px; }
+  .mini small { color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: .06em; font-weight: 600; }
+  .gancho { background: var(--panel2); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; border-left: 3px solid var(--line); }
+  .gancho:first-of-type { border-left-color: var(--accent); }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; background: #2b2410; color: var(--accent); margin-right: 6px; font-weight: 600; }
+  .gancho .fala { font-size: 16px; font-weight: 600; margin: 6px 0; }
+  .tela { display: inline-block; background: #000; color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 13px; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+  .tabs button.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .cena { display: grid; grid-template-columns: 78px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .cena:first-child { border-top: 0; }
+  .cena .t { font-weight: 700; color: var(--accent); }
+  .cena .t small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; }
+  .cena .narr { font-size: 16px; margin: 4px 0 6px; }
+  .cena .vis { color: var(--muted); font-size: 13px; }
+  .cena .gat { font-size: 12px; color: var(--ok); }
+  pre.txt { white-space: pre-wrap; font: inherit; background: var(--panel2); padding: 12px; border-radius: 8px; margin: 0; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin-bottom: 6px; }
+  .alerta li::marker { color: var(--warn); }
+  .hash { color: #7fb3ff; }
+  .erro { background: #2a1512; border: 1px solid var(--warn); color: #ffd4c9; padding: 14px; border-radius: var(--radius); }
+  .loading { text-align: center; padding: 50px 20px; color: var(--muted); }
+  .spin { width: 36px; height: 36px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: s 1s linear infinite; margin: 0 auto 14px; }
+  @keyframes s { to { transform: rotate(360deg); } }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ok); color: #002313; padding: 8px 16px; border-radius: 99px; font-weight: 600; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Copywriter de <span>Reels</span> · Seminovos</h1>
+  <p>Gancho, roteiro de até 30s e textos do anúncio a partir dos dados do carro.</p>
+</header>
+
+<main>
+  <form id="f" autocomplete="off">
+    <fieldset>
+      <legend>O carro</legend>
+      <div class="row">
+        <label>Marca <b>*</b><input name="marca" placeholder="Jeep" required></label>
+        <label>Modelo <b>*</b><input name="modelo" placeholder="Compass" required></label>
+      </div>
+      <div class="row">
+        <label>Ano <b>*</b><input name="ano" placeholder="2021/2022" required></label>
+        <label>Preço <b>*</b><input name="preco" placeholder="R$ 129.900" required></label>
+      </div>
+      <div class="row">
+        <label>Versão / motor<input name="versao" placeholder="Longitude 1.3 Turbo"></label>
+        <label>Km<input name="km" placeholder="38.000 km"></label>
+      </div>
+      <div class="row">
+        <label>Cor<input name="cor" placeholder="Branco"></label>
+        <label>Câmbio
+          <select name="cambio"><option value="">—</option><option>Automático</option><option>Manual</option><option>CVT</option><option>Automatizado</option></select>
+        </label>
+      </div>
+      <label>Opcionais / diferenciais
+        <textarea name="diferenciais" placeholder="Teto solar, multimídia com CarPlay, banco de couro, sensor de estacionamento..."></textarea>
+      </label>
+      <label>Procedência
+        <input name="procedencia" placeholder="Único dono, revisões na concessionária, laudo aprovado, garantia 3 meses">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Oferta</legend>
+      <div class="row">
+        <label>Valor FIPE<input name="fipe" placeholder="R$ 134.000"></label>
+        <label>Entrada<input name="entrada" placeholder="R$ 30.000"></label>
+      </div>
+      <label>Parcela<input name="parcela" placeholder="48x de R$ 2.390"></label>
+      <div class="checks">
+        <label><input type="checkbox" name="aceita_troca"> Aceita troca</label>
+        <label><input type="checkbox" name="financia"> Financia</label>
+      </div>
+      <label>Condição especial / urgência real
+        <input name="condicoes" placeholder="Preço válido até sábado, IPVA 2027 pago...">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Vídeo</legend>
+      <div class="row">
+        <label>Duração
+          <select name="duracao"><option value="30">30s</option><option value="20">20s</option><option value="15">15s</option></select>
+        </label>
+        <label>Tom
+          <select name="tom">
+            <option value="">Automático</option>
+            <option>Energético e urgente</option>
+            <option>Premium / sofisticado</option>
+            <option>Próximo e de confiança</option>
+            <option>Divertido / descontraído</option>
+            <option>Racional / custo-benefício</option>
+          </select>
+        </label>
+      </div>
+      <label>Formato
+        <select name="formato">
+          <option>Apresentador falando para a câmera</option>
+          <option>Locução em off com imagens do carro</option>
+          <option>POV / câmera na mão, estilo bastidor</option>
+          <option>Só texto na tela + música (sem fala)</option>
+        </select>
+      </label>
+      <label>Público-alvo<input name="publico" placeholder="Deixe vazio para a IA definir"></label>
+      <div class="row">
+        <label>Loja<input name="loja" placeholder="Nome da loja"></label>
+        <label>Cidade<input name="cidade" placeholder="Campinas - SP"></label>
+      </div>
+      <label>CTA
+        <select name="cta_canal"><option>WhatsApp</option><option>Direct do Instagram</option><option>Visita à loja</option></select>
+      </label>
+      <label>Observações<textarea name="observacoes" placeholder="Qualquer detalhe extra que o vendedor saiba (ex.: pneus novos, chave reserva, nunca bateu)"></textarea></label>
+    </fieldset>
+
+    <button class="primary" id="btn" type="submit">Gerar copy do Reels</button>
+  </form>
+
+  <section id="saida">
+    <div class="vazio">
+      <h2>Preencha o carro e clique em gerar</h2>
+      <p>Você recebe 5 ganchos, o roteiro cena a cena (com fala, texto na tela e o que filmar), uma versão de 15s para teste A/B, legenda, hashtags e os textos do anúncio patrocinado.</p>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast">Copiado!</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let ultimo = null;
+const copias = {};
+
+function copiar(id) {
+  navigator.clipboard.writeText(copias[id] || "").then(() => {
+    const t = $("#toast"); t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1200);
+  });
+}
+function btnCopiar(id, texto) { copias[id] = texto; return `<button type="button" onclick="copiar('${id}')">Copiar</button>`; }
+
+function roteiroTexto(r) {
+  return `${r.titulo} (${r.duracao_seg}s)\n\n` + r.cenas.map(c =>
+    `[${c.tempo}] ${c.etapa.toUpperCase()}\nFILMAR: ${c.visual}\nFALA: ${c.narracao}\nTELA: ${c.texto_tela}`
+  ).join("\n\n");
+}
+
+function cenasHTML(r) {
+  return r.cenas.map(c => `
+    <div class="cena">
+      <div class="t">${esc(c.tempo)}<small>${esc(c.etapa)}</small></div>
+      <div>
+        <span class="tela">${esc(c.texto_tela)}</span>
+        <div class="narr">“${esc(c.narracao)}”</div>
+        <div class="vis">🎥 ${esc(c.visual)}</div>
+        <div class="gat">● ${esc(c.gatilho)}</div>
+      </div>
+    </div>`).join("");
+}
+
+function mostrarRoteiro(qual) {
+  const r = qual === "curta" ? ultimo.versao_curta_15s : ultimo.roteiro_principal;
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.r === qual));
+  $("#rt-titulo").textContent = `${r.titulo} · ${r.duracao_seg}s`;
+  $("#rt-cenas").innerHTML = cenasHTML(r);
+  copias.roteiro = roteiroTexto(r);
+}
+
+function render(d) {
+  ultimo = d;
+  const a = d.anuncio_meta;
+  const anuncioTxt = `Texto principal:\n${a.texto_principal}\n\nTítulo: ${a.titulo}\nDescrição: ${a.descricao}\nBotão: ${a.botao_cta}`;
+  const legendaTxt = `${d.legenda_post}\n\n${d.hashtags.map(h => h.startsWith("#") ? h : "#" + h).join(" ")}`;
+
+  $("#saida").innerHTML = `
+    <div class="card">
+      <h2>Estratégia</h2>
+      <p class="big">${esc(d.angulo_de_venda)}</p>
+      <div class="grid3">
+        <div class="mini"><small>Público</small><div>${esc(d.publico_alvo)}</div></div>
+        <div class="mini"><small>Objeção a quebrar</small><div>${esc(d.objecao_principal)}</div></div>
+        <div class="mini"><small>Gatilhos</small><div>${d.gatilhos_usados.map(g => `<b>${esc(g.gatilho)}</b>: ${esc(g.como_foi_aplicado)}`).join("<br>")}</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ganchos (0–3s) ${btnCopiar("ganchos", d.ganchos.map((g,i) => `${i+1}. [${g.tipo}] ${g.fala}\n   Tela: ${g.texto_tela}\n   Visual: ${g.visual}`).join("\n\n"))}</h2>
+      ${d.ganchos.map(g => `
+        <div class="gancho">
+          <span class="tag">${esc(g.tipo)}</span><span class="tela">${esc(g.texto_tela)}</span>
+          <div class="fala">“${esc(g.fala)}”</div>
+          <div class="muted">🎥 ${esc(g.visual)}</div>
+          <div class="muted" style="font-size:13px;margin-top:4px">💡 ${esc(g.por_que_funciona)}</div>
+        </div>`).join("")}
+    </div>
+
+    <div class="card">
+      <h2><span id="rt-titulo"></span> <button type="button" onclick="copiar('roteiro')">Copiar roteiro</button></h2>
+      <div class="tabs">
+        <button type="button" data-r="principal" onclick="mostrarRoteiro('principal')">Roteiro principal</button>
+        <button type="button" data-r="curta" onclick="mostrarRoteiro('curta')">Versão 15s (teste A/B)</button>
+      </div>
+      <div id="rt-cenas"></div>
+    </div>
+
+    <div class="card">
+      <h2>Locução corrida (teleprompter) ${btnCopiar("locucao", d.locucao_corrida)}</h2>
+      <pre class="txt">${esc(d.locucao_corrida)}</pre>
+    </div>
+
+    <div class="card">
+      <h2>Legenda + hashtags ${btnCopiar("legenda", legendaTxt)}</h2>
+      <pre class="txt">${esc(d.legenda_post)}</pre>
+      <p class="hash">${d.hashtags.map(h => esc(h.startsWith("#") ? h : "#" + h)).join(" ")}</p>
+    </div>
+
+    <div class="card">
+      <h2>Anúncio patrocinado (Meta Ads) ${btnCopiar("anuncio", anuncioTxt)}</h2>
+      <div class="grid3">
+        <div class="mini" style="grid-column: span 3"><small>Texto principal</small><div>${esc(a.texto_principal)}</div></div>
+        <div class="mini"><small>Título</small><div>${esc(a.titulo)}</div></div>
+        <div class="mini"><small>Descrição</small><div>${esc(a.descricao)}</div></div>
+        <div class="mini"><small>Botão</small><div>${esc(a.botao_cta)}</div></div>
+      </div>
+      <p class="muted" style="margin-bottom:0"><b>Segmentação sugerida:</b> ${esc(a.sugestao_segmentacao)}</p>
+    </div>
+
+    <div class="grid3" style="grid-template-columns:1fr 1fr">
+      <div class="card"><h2>Dicas de gravação</h2><ul>${d.dicas_gravacao.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div class="card"><h2>⚠️ Confirmar antes de publicar</h2><ul class="alerta">${d.alertas.map(x => `<li>${esc(x)}</li>`).join("") || "<li>Nada pendente.</li>"}</ul></div>
+    </div>
+    <p class="muted" style="font-size:12px;text-align:right">Gerado por ${esc(d._modelo || "")}</p>
+  `;
+  mostrarRoteiro("principal");
+}
+
+$("#f").addEventListener("submit", async e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const dados = Object.fromEntries(fd.entries());
+  dados.aceita_troca = fd.has("aceita_troca");
+  dados.financia = fd.has("financia");
+
+  const btn = $("#btn");
+  btn.disabled = true; btn.textContent = "Escrevendo a copy...";
+  $("#saida").innerHTML = `<div class="loading"><div class="spin"></div>A IA está estudando o carro e montando o roteiro.<br>Leva cerca de 30 a 60 segundos.</div>`;
+  if (window.innerWidth < 960) $("#saida").scrollIntoView({behavior: "smooth"});
+
+  try {
+    const r = await fetch("/api/gerar", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(dados) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.erro || "Erro desconhecido");
+    render(j);
+  } catch (err) {
+    $("#saida").innerHTML = `<div class="erro">${esc(err.message)}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = "Gerar nova versão";
+  }
+});
+</script>
+</body>
+</html>

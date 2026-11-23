@@ -1,0 +1,18 @@
+# segredos
+.env
+
+# dados da empresa (ficam na máquina; vão para outra máquina pelo backup.bat, não pelo GitHub)
+/projetos/
+/renders/
+/referencias/
+/marca/
+/backups/
+/_lixeira*/
+/*.json
+*.tmp
+*.bak*
+
+# ambiente
+/.venv/
+__pycache__/
+*.pyc
