@@ -12,10 +12,15 @@ App Flask + estúdio de vídeo em canvas. Roda **nesta máquina** em http://loca
    - `ESTOQUE_DATABASE_URL` (Neon, região sa-east-1)
 
    Nunca imprima nem registre os valores.
-4. Dados (carros, takes, vídeos, aprendizado, agenda) **não estão no Git**. Eles vêm de um backup:
-   `.venv\Scripts\python dados.py restaurar <arquivo.zip>`. O ZIP é gerado na máquina antiga com `backup.bat`.
-   Sem o backup o app abre vazio. **Não ligue o `ESTOQUE_DATABASE_URL` antes de restaurar:** a nuvem já tem o estoque,
-   e o app só apaga da nuvem com trava de segurança, mas o certo é restaurar primeiro.
+4. Dados (carros, takes, aprendizado, agenda, marca) **não estão no Git**. Eles foram deixados no banco do estoque
+   (tabela temporária `app_transferencia`). Com o `.env` preenchido e **antes de abrir o app**, rode:
+   `.venv\Scripts\python dados.py baixar-nuvem`
+   O comando baixa, confere, restaura nesta pasta e apaga a tabela do banco.
+   Alternativa com ZIP: `.venv\Scripts\python dados.py restaurar <arquivo.zip>`.
+   Se `baixar-nuvem` disser que não há pacote, os dados já foram restaurados: confira se a pasta `projetos/` existe.
+   O pacote não traz os brutos dos takes (`*_original.*`), os vídeos exportados (`renders/`) nem os vídeos das referências.
+   Esses ficaram arquivados na máquina antiga. As versões tratadas dos takes vêm no pacote, então editar funciona.
+   Só "reprocessar estabilização" de takes antigos falha, por falta do bruto.
 
 ## Rodar / atualizar
 - Rodar: `.venv\Scripts\python app.py` (servidor waitress em 127.0.0.1:5000). Para o usuário, há o `iniciar.bat`.

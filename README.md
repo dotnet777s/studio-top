@@ -14,8 +14,9 @@ O estoque e as fotos são espelhados num **banco na nuvem** que os outros apps c
    ```
    git clone https://github.com/<conta>/<repositorio>.git C:\TopCar\Conteudo
    ```
-4. Traga os dados da máquina antiga. Lá, rode o **`backup.bat`**: ele gera `backups\TopCar_dados_….zip` com os carros, takes, vídeos,
-   aprendizado, agenda e marca. Copie esse ZIP para a máquina nova e arraste-o sobre o **`restaurar.bat`**.
+4. Traga os dados da máquina antiga. **Sem pendrive:** lá rode `python dados.py enviar-nuvem`, e na máquina nova, já com o `.env`
+   preenchido, rode `.venv\Scripts\python dados.py baixar-nuvem`. A transferência passa pelo banco do estoque e o pacote é
+   apagado no fim. **Com pendrive:** `backup.bat` lá e `restaurar.bat` aqui.
 5. Abra o **`iniciar.bat`**. Na primeira vez ele prepara tudo (cerca de 2 minutos) e abre o `.env` no Bloco de Notas. Preencha:
    - `GEMINI_API_KEY`: a chave da IA;
    - `ESTOQUE_DATABASE_URL`: o banco do estoque na nuvem.
